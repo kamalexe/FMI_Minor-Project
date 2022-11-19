@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Farmer Merchant Integration</title>
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/feature.css' %}" rel="stylesheet">
+    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+    <!--    CDN-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+          integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <style>
+    a{
+    text-decoration:none;
+    color:black;
+    cursor: pointer;
+    }
+
+    #navbarSupportedContent > ul > li{
+    padding: 0rem 1rem;
+    font-size:1.2rem;
+    }
+#menu ul li a{
+color:white ;
+}
+.glasscard{
+    position:fixed;
+    z-index:+122;
+    bottom:10px;
+    right:10px;
+    width: 18rem;
+    height: 10rem;
+    max-width: 300px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(2px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-right-color: rgba(255, 255, 255, 0.1);
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
+}
+
+.glasscardinner{
+    height: 100%;
+}
+
+
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    <!--headline start-->
+    <div class="row bg-danger text-light">
+        <div class="col-sm-4 p-1"> Call Us: +919453318798</div>
+        <div class="col-sm-4 p-1">Email Us: email@gmail.com</div>
+        <div class="col-sm-4 p-1">Address: Fatehpur, Barabanki, U.P</div>
+    </div>
+    <!--headline close-->
+
+    <!-- start menu-->
+    <nav class="row navbar navbar-expand-lg" id="menu" style="background:#48BF91;">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa-solid fa-bars text-light"></i>
+                <!--                        <span class="navbar-toggler-icon"></span>-->
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav m-auto mb-2 mb-lg-0 ">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'index' %}"><i
+                                class="fa-solid fa-house"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'contact' %}">
+                            <i class="fa-solid fa-address-book"></i> Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}"><i class="fa-solid fa-address-card"></i>
+                            About</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            <i class="fa-sharp fa-solid fa-registered"></i> Registration
+                        </a>
+                        <ul class="dropdown-menu" style="background: #48BF91;">
+                            <li><a class="dropdown-item " href="{% url 'farmerreg' %}">Farmer</a></li>
+                            <li><a class="dropdown-item" href="{% url 'merchentreg' %}">Merchant</a></li>
+                        </ul>
+                    </li>
+                    <!-- Social Page -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'socialpage' %}">
+                            <i class="fa-solid fa-hashtag"></i> Irrigreat App</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}"><i class="fa-solid fa-user-plus"></i> Login</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- end menu-->
+
+    <!-- Slider bar Start -->
+    <div class=" px-3 py-3">
+        <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+                        aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner rounded">
+                <div class="carousel-item active">
+                    <img src="{% static 'images/slider_1.JPG' %}" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>First slide label</h5>
+                        <p>Some representative placeholder content for the first slide.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'images/slider_2.JPG' %}" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Second slide label</h5>
+                        <p>Some representative placeholder content for the second slide.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'images/slider_3.PNG' %}" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Second slide label</h5>
+                        <p>Some representative placeholder content for the second slide.</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+    <!-- Slider bar ENd -->
+    </section>
+
+    <!--Content Section-->
+    <div class="row mt-5 ">
+
+        <div class="col-sm-12">
+            {% block body %}
+
+            {% endblock body %}
+        </div>
+    </div>
+    <!--End Content Section-->
+</div>
+
+
+<!--Footer test-->
+<div class="container">
+    <footer class="py-5">
+        <div class="row">
+            <div class="col-3">
+                <h5>Address</h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Mobile
+                        No:<span>6386011260</span></a></li>
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Mail:<span>BABACOLDSTORAGE.INFO</span></a>
+                    </li>
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">BARABANKI</a></li>
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">UTTAR PRADESH</a></li>
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">INDIA</a></li>
+                </ul>
+            </div>
+
+            <div class="col-2">
+                <h5>Section</h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+                </ul>
+            </div>
+
+            <div class="col-2">
+                <h5>Section</h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+                </ul>
+            </div>
+
+            <div class="col-5 mx-auto offset-1">
+                <div class="container w-100 h-100">
+                    <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3643661.8439966883!2d78.76808796058536!3d26.895130668849582!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398e2e1cc425d487%3A0x8f2bbc3358b3fd0b!2sSanatan%20Dharm%20Inter%20College!5e0!3m2!1sen!2sin!4v1660717814801!5m2!1sen!2sin"
+                            class="w-100 h-100" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between py-4 my-4 border-top">
+            <p>© 2021 Company, Inc. All rights reserved.</p>
+            <ul class="list-unstyled d-flex">
+                <li class="ms-3"><a class="link-dark" href="#"><i class="fa-brands fa-square-twitter"></i></a></li>
+                <li class="ms-3"><a class="link-dark" href="#"><i class="fa-brands fa-square-instagram"></i></a></li>
+                <li class="ms-3"><a class="link-dark" href="#"><i class="fa-brands fa-square-facebook"></i></a></li>
+            </ul>
+        </div>
+    </footer>
+</div>
+<!--Footer test-->
+
+</body>
+</html>

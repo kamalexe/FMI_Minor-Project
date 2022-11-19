@@ -1,0 +1,25 @@
+:root {
+  --white:#f8f9fa;
+}
+
+
+.left{
+background:cyan;
+}
+.right{
+background:var(--white);
+}
+.min-h{
+min-height:500px;
+}
+
+
+
+
+
+
+
+
+
+
+

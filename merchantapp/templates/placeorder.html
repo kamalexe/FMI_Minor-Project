@@ -1,0 +1,76 @@
+{% extends 'merchantbase.html' %}
+
+{% block username%}
+{{merchantName.name}}
+{% endblock %}
+
+{% block body%}
+<div class="container-fluid">
+    <!-- DataTales -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Product Detail</h6>
+        </div>
+        <div class="container my-3">
+            <form class="row g-3" action="{% url 'merchantapp:purchaseCustomerDetail' %} " method="POST">
+                {% csrf_token %}
+                <input type="text" class="form-control" readonly value="{{product.id}}" hidden name="productid">
+                <div class="col-md-6">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" value="{{merchantName.userid}}" name="email">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Name</label>
+                    <input type="text" class="form-control" value="{{merchantName.name}}" readonly name="customer">
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Address</label>
+                    <input type="text" class="form-control" value="{{merchantName.firmaddress}}" readonly name="address">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">PAN</label>
+                    <input type="email" class="form-control" readonly value="{{merchantName.panno}}" name="panno">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">GST</label>
+                    <input type="text" class="form-control" readonly value="{{merchantName.gstno}}" name="gstno">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Product</label>
+                    <input type="text" class="form-control" readonly value="{{product.productName}}" name="product">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Qty<small> in Quintal</small></label>
+                    <input type="text" class="form-control" readonly value="{{product.qty}}" name="qty">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Price<small> per kg</small></label>
+                    <input type="text" class="form-control" readonly value="{{product.price}}" name="price">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Total</label>
+                    <input type="text" class="form-control" readonly value="{{total}}">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">City</label>
+                    <input type="text" class="form-control" value="{{merchantName.firmaddress}}" required name="city">
+                </div>
+                <div class="col-md-4">
+                    <label for="inputState" class="form-label">State</label>
+                    <select id="inputState" class="form-select" required name="state">
+                        <option selected>Choose...</option>
+                        <option value="Uttar Pradesh">Uttar Pradesh</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Zip</label>
+                    <input type="text" class="form-control" required name="zip">
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Purchase</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

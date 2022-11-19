@@ -1,0 +1,210 @@
+{% extends 'merchantbase.html' %}
+
+
+{% block username%}
+{{merchantName.name}}
+{% endblock %}
+
+{% block body%}
+<style>
+    @import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600&display=swap");
+
+h2, h4, h6 {
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+}
+
+.root {
+  padding: 1rem;
+  border-radius: 5px;
+  box-shadow: 0 2rem 6rem rgba(0, 0, 0, 0.3);
+}
+
+figure {
+  display: flex;
+}
+figure img {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 15%;
+  border: 1.5px solid #f05a00;
+  margin-right: 1.5rem;
+  padding:1rem;
+}
+figure figcaption {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+figure figcaption h4 {
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+figure figcaption h6 {
+  font-size: 1rem;
+  font-weight: 300;
+}
+figure figcaption h2 {
+  font-size: 1.6rem;
+  font-weight: 500;
+}
+
+.order-track {
+  margin-top: 2rem;
+  padding: 0 1rem;
+  border-top: 1px dashed #2c3e50;
+  padding-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+}
+.order-track-step {
+  display: flex;
+  height: 7rem;
+}
+.order-track-step:last-child {
+  overflow: hidden;
+  height: 4rem;
+}
+.order-track-step:last-child .order-track-status span:last-of-type {
+  display: none;
+}
+.order-track-status {
+  margin-right: 1.5rem;
+  position: relative;
+}
+.order-track-status-dot {
+  display: block;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background: #4368d6;
+}
+.order-track-status-line {
+  display: block;
+  margin: 0 auto;
+  width: 2px;
+  height: 7rem;
+  background: #4368d6;
+}
+.order-track-text-stat {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-bottom: 3px;
+}
+.order-track-text-sub {
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.order-track {
+  transition: all .3s height 0.3s;
+  transform-origin: top center;
+}
+
+
+
+
+
+
+
+
+
+</style>
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Purchased List</h1>
+    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+        For more information about DataTables, please visit the official DataTables documentation.
+    </p>
+    <!-- DataTales -->
+    <!-- DataTales -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold" style="color:#4368d6;">DataTables Example</h6>
+        </div>
+
+        <div class="container my-3">
+
+            <div class="col-md-12 text-center">
+                <section class="root">
+                    <form class="row g-3" action="{% url 'merchantapp:trackOrder' %} " method="POST">
+                        {% csrf_token %}
+                        <div class="col-md-12">
+                            <label class="form-label">Order Id</label>
+                            <input type="number" class="form-control" value="" name="orderId">
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-block text-light" style="background:#4368d6;">View
+                            </button>
+                        </div>
+                    </form>
+                    <div class="order-track">
+                        {% for track in track %}
+                        <div class="order-track-step">
+                            <div class="order-track-status">
+                                <span class="order-track-status-dot"></span>
+                                <span class="order-track-status-line"></span>
+                            </div>
+                            <div class="order-track-text">
+                                <p class="order-track-text-stat"> {{track.orderStatus}}</p>
+                                <span class="order-track-text-sub">{{track.updateDate}}</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+                <!--                Source: https://codepen.io/luisar/pen/JjoOZav?editors=1100?-->
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>Order Id</th>
+                        <th>Seller Id</th>
+                        <th>Seller Name</th>
+                        <th>Product</th>
+                        <th>Quantity<small class=""> in quintal</small></th>
+                        <th>Price<small class=""> per kg</small></th>
+                        <th>Track Order</th>
+                        <th>Order Date</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+
+                    <tr>
+                        <th>Order Id</th>
+                        <th>Seller Id</th>
+                        <th>Seller Name</th>
+                        <th>Product</th>
+                        <th>Quantity<small class=""> in quintal</small></th>
+                        <th>Price<small class=""> per kg</small></th>
+                        <th>Track Order</th>
+                        <th>Order Date</th>
+
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    {% for b in orderObj %}
+                    <tr>
+                        <td class="">{{ b.id }}</td>
+                        <td class="">{{ b.farmerId }}</td>
+                        <td class="">{{ b.farmerName }}</td>
+                        <td class="">{{ b.product }}</td>
+                        <td class="">{{ b.qty }}</td>
+                        <td class="">{{ b.price }}</td>
+                        <td class="">{{ b.track_update }}</td>
+                        <td class="">{{ b.date }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+{% endblock %}

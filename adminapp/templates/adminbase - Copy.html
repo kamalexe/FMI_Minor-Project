@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Farmer Merchant Integration</title>
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+    <!--CDN-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+          integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+</head>
+<body>
+<!---->
+
+<!---->
+<div class="container-fluid">
+    <!--headline start-->
+    <div class="row bg-warning fw-bold text-light">
+        <div class="col-sm-6 p-1 text-center"> Baba Cold Storage</div>
+        <div class="col-sm-6 p-1 text-center">Welcome Administrator</div>
+    </div>
+    <!--headline close-->
+    <!--    nav bar start-->
+    <div class="row p-0">
+        <nav class="navbar navbar-expand-lg bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{% url 'adminapp:adminhome' %}">Navbar</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-link active" aria-current="page" href="{% url 'adminapp:adminhome' %}">Home</a>
+                        <a class="nav-link" href="{% url 'adminapp:enquiries' %}">Enquiry Management</a>
+                        <a class="nav-link" href="{% url 'adminapp:booking' %}">Booking</a>
+                        <a class="nav-link" href="{% url 'adminapp:purchase' %}">Purchase</a>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                               aria-expanded="false">
+                                Admin
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{% url 'adminapp:changepassword' %}">Change Password</a></li>
+                                     <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="{% url 'adminapp:logout' %}">Logout</a></li>
+                            </ul>
+                        </li>
+                    </div>
+
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!--nav bar end-->
+    <!-- Main container -->
+    <div class="row mt-2 min-h">
+        <div class="col-sm-3 left">
+
+        </div>
+        <div class="col-sm-9 right">
+            {% block body%}
+            {% endblock %}
+
+        </div>
+    </div>
+    <!-- Main container -->
+
+    <!--footer-->
+    <div class="row mt-1 bg-dark text-light">
+        <div class="col-sm-6 text-center">
+            <p>Copyright &copy to Baba Cold Storage</p>
+        </div>
+        <div class="col-sm-6 text-center">
+            <p>Created By Brijesh Mishra</p>
+        </div>
+    </div>
+    <!--footer-->
+</div>
+</body>
+</html>

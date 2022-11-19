@@ -1,0 +1,218 @@
+{% extends 'farmerbase.html' %}
+{% block name %}{{farmerName.name}}{% endblock %}
+{% block body%}
+<!-- Begin Page Content -->
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Customer Detail</h1>
+    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+        For more information about DataTables, please visit the <a target="_blank">official DataTables documentation</a>.
+    </p>
+
+    <!-- DataTales -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+             <h6 class="m-0 font-weight-bold text-primary"><a href="downSoldProdList/">Downdoad</a> </h6>
+        </div>
+        <!--        Start Chart-->
+        <div class="container my-3">
+
+            <div class="col-md-12 text-center">
+                <div class="container">
+                    <div class="row my-5">
+                        <div class="col-md-6">
+                            <div class="bg-white">
+                                <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+                                <canvas id="myChart1" width="400" height="300"></canvas>
+                                <script>
+                        var ctx = document.getElementById('myChart1').getContext('2d');
+                        var myChart1 = new Chart(ctx, {
+                            type: 'pie',
+                            data: {
+                                labels: [ {% for j in soldobj %} '{{ j.product }}',{% endfor %}],
+                                datasets: [{
+                                    label: 'Products',
+                                    data: [{% for j in orderObj %} '{{ j.qty }}',{% endfor %}],
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(255, 139, 64, 1)',
+                                        'rgba(255, 19, 132, 1)',
+                                        'rgba(54, 162, 234, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 112, 192, 1)',
+                                        'rgba(151, 102, 255, 1)',
+                                        'rgba(25, 159, 64, 1)',
+                                        'rgba(25, 559, 64, 1)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(255, 159, 64, 1)',
+                                        'rgba(255, 19, 132, 1)',
+                                        'rgba(54, 162, 234, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 112, 192, 1)',
+                                        'rgba(151, 102, 255, 1)',
+                                        'rgba(25, 159, 64, 1)',
+                                        'rgba(25, 559, 64, 1)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+
+
+
+
+
+
+                                </script>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="bg-white">
+                                <canvas id="myChart" width="400" height="300"></canvas>
+                                <script>
+                        var ctx = document.getElementById('myChart').getContext('2d');
+                        var myChart = new Chart(ctx, { type: 'bar', data: {
+                                labels: [{% for j in orderObj %} '{{ j.product }}',{% endfor %}],datasets: [{label: 'Products',data: [{% for j in orderObj %} '{{ j.date.hour }}',{% endfor %}],backgroundColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(255, 159, 64, 1)',
+                                         'rgba(255, 212, 86, 1)',
+                                        'rgba(75, 192, 112, 1)',
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(255, 159, 64, 1)',
+                                        'rgba(255, 212, 86, 1)',
+                                        'rgba(75, 192, 112, 1)',
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+
+
+
+
+
+
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--                https://github.com/KenBroTech/Bootstrap-Dashboard-Interface-Design/blob/master/index.html-->
+                <!--End Graphs-->
+
+                <!--                Source: https://codepen.io/luisar/pen/JjoOZav?editors=1100?-->
+            </div>
+        </div>
+        <!--        End Chart-->
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th scope="col">Order Id</th>
+                        <th scope="col">Merchant Id</th>
+                        <th scope="col">Merchant Name</th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Quantity<em class="text-muted" style="font-size:10px">in Quintal</em></th>
+                        <th scope="col">Price<em class="text-muted" style="font-size:10px"> per kg</em></th>
+                        <th scope="col">City</th>
+                        <th scope="col">PAN</th>
+                        <th scope="col">GST</th>
+                        <th scope="col">Order Update</th>
+                        <th scope="col">Update Date</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+
+                    <tr>
+                        <th scope="col">Order Id</th>
+                        <th scope="col">Merchant Id</th>
+                        <th scope="col">Merchant Name</th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Quantity<em class="text-muted" style="font-size:10px">in Quintal</em></th>
+                        <th scope="col">Price<em class="text-muted" style="font-size:10px"> per kg</em></th>
+                        <th scope="col">City</th>
+                        <th scope="col">PAN</th>
+                        <th scope="col">GST</th>
+                        <th scope="col">Order Update</th>
+                        <th scope="col">Update Date</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    {% for b in orderObj %}
+                    <tr>
+                        <!--                        <th scope="row">{{ b.farmerName }}</th>-->
+                        <td>{{ b.id }}</td>
+                        <td>{{ b.merchantId }}</td>
+                        <td>{{ b.merchantName }}</td>
+                        <td>{{b.product}}</td>
+                        <td>{{b.qty}}</td>
+                        <td>{{b.price}}</td>
+                        <td>{{b.city}}</td>
+                        <td>{{b.panno}}</td>
+                        <td>{{b.gstno}}</td>
+                        <td style="min-width:10rem;">
+
+                            <div class="input-group mb-3">
+                                <form method="post" action="{% url 'farmerapp:updateStatus' %}">
+                                    {% csrf_token %}
+                                    <input type="text" class="form-control " name="orderId" value="{{ b.id }}" hidden>
+                                    <textarea type="text" class="form-control text-center" name="status"
+                                              placeholder="{{ b.track_update }}"></textarea>
+                                    <input class="btn btn-outline-secondary btn-sm btn-block my-2" type="submit"
+                                           value="Update">
+                                </form>
+                            </div>
+                        </td>
+                        <td>{{b.date}}</td>
+                        <td>{{b.date}}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
