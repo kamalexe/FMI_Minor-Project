@@ -10,4 +10,5 @@ urlpatterns = [
     path('logout', views.logout, name='logout'),
     path('trackOrder', views.trackOrder, name='trackOrder'),
     path('viewProd/like_post/<str:id>', views.LikeView, name='LikeView'),
+    path('handlerequest',views.handlerequest,name='Handlerequest')
 ]

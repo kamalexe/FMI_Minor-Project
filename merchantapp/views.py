@@ -3,7 +3,9 @@ from fmiapp.models import MerchantInfo,FarmerInfo
 from farmerapp.models import FarmerSellProduct,Tracker
 from .models import orderDetail
 from django.http import HttpResponseRedirect
-
+from django.views.decorators.csrf import csrf_exempt
+from PayTm import Checksum
+MERCHANT_KEY = 'XW&JtZccG&mRxq0K' #test_MERCHANT_KEY
 # Create your views here.
 def merchanthome(request):
     try:
@@ -26,7 +28,10 @@ def viewProd(request,id):
     if not request.session['merchant']:
         return render(request, 'login.html')
     merchantName = MerchantInfo.objects.get(userid=request.session['merchant'])
-    product = FarmerSellProduct.objects.get(id = id)
+    try:
+        product = FarmerSellProduct.objects.get(id = id)
+    except:
+        return redirect('/merchantapp/')
     sellerobj= FarmerInfo.objects.get(aadharno = product.farmerName)
     print('----viewProd')
     print(sellerobj.name)
@@ -51,10 +56,10 @@ def placeorder(request,id):
         return render(request, 'login.html')
     merchantName = MerchantInfo.objects.get(userid=request.session['merchant'])
     merchantid = merchantName.userid
-    print('-----')
-    print("29 "+merchantid)
-    print('-----')
-    product = FarmerSellProduct.objects.get(id=id)
+    try:
+        product = FarmerSellProduct.objects.get(id=id)
+    except:
+        return redirect('/merchantapp/')
     print(product.farmerName)
     total = int(product.qty) * int(product.price)
     context = {'product': product,'merchantName': merchantName,'total':total}
@@ -65,9 +70,7 @@ def purchaseCustomerDetail(request):
     if not request.session['merchant']:
         return render(request, 'login.html')
     productid = request.POST['productid']
-    print('productid$$$$$$$$$$$$$$$$$$')
-    print(productid)
-    print('productid$$$$$$$$$$$$$$$$$$')
+    request.session['productid'] = productid
     soldProduct = FarmerSellProduct.objects.get(id=productid)
     sellerobj = FarmerInfo.objects.get(aadharno=soldProduct.farmerName)
 
@@ -90,20 +93,23 @@ def purchaseCustomerDetail(request):
 
     detail = orderDetail(email= email,customer=customer, address = address, panno=panno, gstno=gstno,productid=productid, product=product, qty=qty, price=price,city=city,state=state,zip=zip,merchantName=merchantName,merchantId=merchantId,farmerName=farmerName,farmerId=farmerId)
     detail.save()
-    soldProduct.delete()
-    # merchantobj = MerchantInfo.objects.get(userid=request.session['merchant'])
-    # merchantId = merchantobj.aadharno
 
-    # orderObj = orderDetail.objects.all().merchantId[0]
     orderObj = orderDetail.objects.filter(merchantId=merchantId,productid=productid)
-    print("************")
-    print(orderObj[0].id)
-    # print(merchantId)
-    # print(productid)
     updateTrack = Tracker(orderId = orderObj[0])
     updateTrack.save()
-    # return HttpResponse('purchaseCustomerDetail pass')
-    return redirect(reverse('merchantapp:purchasedprod'))
+    # request paytm to transfer the amount to your account
+    param_dict ={
+        'MID': 'zNQCPg84186322693656', #testing
+        'ORDER_ID': str(orderObj[0].id),
+        'TXN_AMOUNT': str(price),
+        'CUST_ID': email,
+        'INDUSTRY_TYPE_ID': 'Retail',
+        'WEBSITE': 'WEBSTAGING',
+        'CHANNEL_ID': 'WEB',
+        'CALLBACK_URL':'http://127.0.0.1:8000/merchantapp/handlerequest',
+    }
+    param_dict['CHECKSUMHASH'] = Checksum.generate_checksum(param_dict,MERCHANT_KEY)
+    return render(request,'paytm.html', {'param_dict':param_dict} )
 
 def purchasedprod(request):
     if request.session['merchant']:
@@ -142,6 +148,23 @@ def LikeView(request,id):
     else:
         product.likes.add(merchantid)
         like = True
-    # return HttpResponse('Liked')
-    # return redirect(reverse(,id=id))
     return redirect(f'/merchantapp/viewProd/{id}')
+
+@csrf_exempt
+def handlerequest(request):
+    # paytm will send you post request
+    form = request.POST
+    response_dict = {}
+    for i in form.keys():
+        response_dict[i] = form[i]
+        if i =='CHECKSUMHASH':
+            checksum = form[i]
+    varify = Checksum.verify_checksum(response_dict,MERCHANT_KEY,checksum)
+    if varify:
+        if response_dict['RESPCODE'] == '01':
+            print('order successful')
+            soldProduct = FarmerSellProduct.objects.get(id=request.session['productid'])
+            soldProduct.delete()
+        else:
+            print('order was not successful'+ response_dict['RESPMSG'] )
+    return render(request, 'paymentstatus.html',{'response':response_dict})

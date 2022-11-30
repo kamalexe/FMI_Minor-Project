@@ -1,89 +1,126 @@
 {% extends 'base.html' %}
-    {% block body %}
-<!--nesw-->
-
+{% load static %}
+{% block body %}
+<!--news start -->
 <section class="glasscard opacity-75 alert alert-dismissible fade show p-0" role="alert">
     <div class="card glasscardinner">
         <div class="card-body">
-          <h5 class="card-title"style="color:#0076BE; font-weight:600">Notification</h5>
+            <h5 class="card-title" style="color:#0076BE; font-weight:600">Notification</h5>
             <ul style="list-style-type:circle">
                 <marquee behavior="smooth" direction="up" style="height:6rem;">
-            {% for n in ns %}
-                <li><p class="card-text text-dark">{{ n.newstext }}</p></li>
+                    {% for n in ns %}
+                    <li><p class="card-text text-dark">{{ n.newstext }}</p></li>
                     <br>
 
-            {% endfor %}
-                    </marquee>
-                </ul>
+                    {% endfor %}
+                </marquee>
+            </ul>
         </div>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
+        <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+    </div>
 
-    </section>
-
-<!--nesw-->
-  <!--Feature Start-->
-    <section class="round">
-        <header class="m-0 round">
-            <h1>
-                Reliable, efficient storage<br/>
-                <strong>Powered by <span style="color:#48BF91;">Stockroom Mart</span></strong>
-            </h1>
-
-            <p>
-                Our Artificial Intelligence powered tools use millions of project data
-                points to ensure that your project is successful
-            </p>
-        </header>
-
-        <ul class="cards-container">
-            <li class="cyan-feature-card">
-                <h2 style="color:#0076BE">Warehouse And Storage</h2>
-                <p>
-                    Monitors activity to identify project roadblocks
-                </p>
-                <i class="fa-solid fa-warehouse"></i>
-            </li>
-
-            <li class="red-feature-card">
-                <h2 style="color:#0076BE">Transportation Services</h2>
-                <p>
-                    Scans our talent network to create the optimal team for your project
-                </p>
-                <i class="fa-solid fa-truck-plane"></i>
-            </li>
-
-            <li class="orange-feature-card">
-                <h2 style="color:#0076BE">Direct Selling</h2>
-                <p>
-                    Regularly evaluates our talent to ensure quality
-                </p>
-                <i class="fa-solid fa-hand-holding-hand"></i>
-            </li>
-
-            <li class="blue-feature-card">
-                <h2 style="color:#0076BE">Loading And Unloading</h2>
-                <p>
-                    Uses data from past projects to provide better delivery estimates
-                </p>
-                <i class="fa-regular fa-truck-ramp-box"></i>
-            </li>
-        </ul>
-    </section>
-    <!--Feature End-->
-
-<div class="p-3 d-flex justify-content-center align-content-center flex-column bd-highlight ">
-<h3 class="text-center">About us</h3>
-            <p class="text-justify m-auto" style="max-width:50rem">Natoque nec suscipit hymenaeos posuere parturient aliquam, consequat ac interdum accumsan lacinia
-                vestibulum quisque. Penatibus eu. Vitae duis nam commodo, fermentum, nunc ridiculus pellentesque Blandit
-                elementum eleifend. Amet. Lorem velit. Elit bibendum vel urna dapibus. Ullamcorper. Nascetur.
-                Cum, accumsan, sollicitudin mattis arcu suscipit suscipit porttitor ipsum iaculis commodo montes nullam
-                lectus vestibulum dui magna. Enim augue faucibus porta pulvinar velit sem. Condimentum. Parturient.
-                Auctor dictumst adipiscing nam. Netus. Dignissim habitasse sed sociosqu per.
-                Tempor molestie eget tempor pellentesque curabitur facilisis morbi netus class vivamus risus. Dictumst
-                pharetra ante cubilia. Nec dictumst pellentesque congue hendrerit. Habitasse, sollicitudin nascetur
-                consequat justo est.</p>
+</section>
+<!--nesw End-->
+<!-- Slider bar Start -->
+    <div class=" px-3 py-3">
+        <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+                        aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
             </div>
+            <div class="carousel-inner rounded">
+                <div class="carousel-item active">
+                    <img src="{% static 'images/slider_1.JPG' %}" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>First slide label</h5>
+                        <p>Some representative placeholder content for the first slide.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'images/slider_2.JPG' %}" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Second slide label</h5>
+                        <p>Some representative placeholder content for the second slide.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'images/slider_3.PNG' %}" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Second slide label</h5>
+                        <p>Some representative placeholder content for the second slide.</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+    <!-- Slider bar ENd -->
+<!--Feature Start-->
+<section class="round bg-dark" style='background:url("http://127.0.0.1:8000/static/images/wave.svg"); background-position: bottom; background-repeat: no-repeat;'>
 
-    {% endblock body %}
+    <header class="m-0 round">
+        <h1 class="text-light">
+            Reliable, efficient storage<br/>
+            <strong>Powered by <span style="color:#48BF91;">Stockroom Mart</span></strong>
+        </h1>
+
+        <p>
+            Our Artificial Intelligence powered tools use millions of project data
+            points to ensure that your project is successful
+        </p>
+    </header>
+    <ul class="cards-container">
+        <li class="cyan-feature-card" style="backdrop-filter: blur( 4px );
+    filter: brightness(0.8);">
+            <h2 style="color:#0076BE">Warehouse And Storage</h2>
+            <p>
+                Monitors activity to identify project roadblocks
+            </p>
+            <i class="fa-solid fa-warehouse"></i>
+        </li>
+
+        <li class="red-feature-card" style="backdrop-filter: blur( 4px );
+    filter: brightness(0.8);">
+            <h2 style="color:#0076BE">Transportation Services</h2>
+            <p>
+                Scans our talent network to create the optimal team for your project
+            </p>
+            <i class="fa-solid fa-truck-plane"></i>
+        </li>
+
+        <li class="orange-feature-card" style="backdrop-filter: blur( 4px );
+    filter: brightness(0.8);">
+            <h2 style="color:#0076BE">Direct Selling</h2>
+            <p>
+                Regularly evaluates our talent to ensure quality
+            </p>
+            <i class="fa-solid fa-hand-holding-hand"></i>
+        </li>
+
+        <li class="blue-feature-card" style="backdrop-filter: blur( 4px );
+    filter: brightness(0.8);">
+            <h2 style="color:#0076BE">Loading And Unloading</h2>
+            <p>
+                Uses data from past projects to provide better delivery estimates
+            </p>
+            <i class="fa-regular fa-truck-ramp-box"></i>
+        </li>
+    </ul>
+
+</section>
+<!--Feature End-->
+{% endblock body %}
 

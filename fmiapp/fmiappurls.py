@@ -12,5 +12,4 @@ urlpatterns = [
     path('mreg/', views.mreg, name='mreg'),
     path('validate/', views.validate, name='validate'),
     path('saveenq/', views.saveenq, name='saveenq'),
-    path('socialpage/', views.socialpage, name='socialpage'),
 ]

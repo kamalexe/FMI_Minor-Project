@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Status</title>
+</head>
+<body>
+{{response}}
+<h1>Payment Status</h1>
+{% if response.RESPCODE == '01' %}
+<h6>Payment Successful</h6>
+<p>Your order ID is: {{response.ORDERID}}</p>
+{% else %}
+<h6>Payment Fail</h6>
+{% endif %}
+</body>
+</html>

@@ -67,17 +67,9 @@ def changepwd(request):
         msg = msg + ' New password is not machted with confirm password!'
         return render(request, 'farmerchangepwd.html', {'msg': msg})
     farmer = request.session['farmer']
-    print('*********')
-    print(farmer)
-    print(oldpassword)
-    print(newpassword)
-    print(confirmpassword)
-    print('*********')
     try:
         obj = FarmerInfo.objects.get(userid=farmer, password=oldpassword)
-        obj = get_object_or_404(Profile, username=username)
-        print(fil)
-        print('Try Third')
+        obj = get_object_or_404(Profile, username=obj.username)
         return redirect('farmerapp:logout')
     except Exception as e:
         print(e)
@@ -141,18 +133,27 @@ def downProdList(request):
     try:
         farmerName = FarmerInfo.objects.get(userid=request.session['farmer'])
         products = FarmerSellProduct.objects.filter(farmerName=farmerName)
-        df = pd.DataFrame(products)
+        productName=[]
+        qty=[]
+        price=[]
+        for product in range(len(products)):
+            productName.append(products[product].productName)
+            qty.append(products[product].qty)
+            price.append(products[product].price)
+
+        dict ={
+            'Product Name':productName,
+            'Qty':qty,
+            'Price':price,
+        }
+        df = pd.DataFrame(dict)
         updateDate = str(datetime.now().strftime("%H_%M_%S"))
         path = r'C:/Users/Lenovo/Downloads/'+updateDate+'_product_List.csv'
         df.to_csv(path, index=False, header=True,index_label='Event_id')
-        # print(df)
-        # return HttpResponse('download')
         return redirect(reverse('farmerapp:prodlist'))
-        return redirect('/farmerapp/prodlist')
     except Exception as e:
         # print(e)
         return redirect(reverse('farmerapp:prodlist'))
-        return redirect('/farmerapp/prodlist')
 
 def downSoldProdList(request):
     try:
