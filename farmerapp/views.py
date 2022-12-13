@@ -29,9 +29,11 @@ def uploadProd(request):
             qty = request.POST['qty']
             price = request.POST['price']
             productName = request.POST['productName']
+            description = request.POST['description']
+            prodImage = request.FILES['prodImage']
             print(price, productName, qty)
             products = FarmerSellProduct.objects.create(farmerName=farmer_name, qty=qty, productName=productName,
-                                                        price=price)
+                                                        price=price,description=description,prodImage=prodImage)
             print(price, productName, qty)
             print(products)
             ns = "Product Added"

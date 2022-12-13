@@ -5,7 +5,7 @@ from .models import orderDetail
 from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from PayTm import Checksum
-MERCHANT_KEY = 'XW&JtZccG&mRxq0K' #test_MERCHANT_KEY
+MERCHANT_KEY = 'XW&JtZccG&mRxq0K'
 # Create your views here.
 def merchanthome(request):
     try:
@@ -70,7 +70,11 @@ def purchaseCustomerDetail(request):
     if not request.session['merchant']:
         return render(request, 'login.html')
     productid = request.POST['productid']
-    request.session['productid'] = productid
+    request.session['productid2'] = productid
+    print('111111111111111111111111111111111')
+    print(productid)
+    print(request.session['productid2'])
+    print('111111111111111111111111111111111')
     soldProduct = FarmerSellProduct.objects.get(id=productid)
     sellerobj = FarmerInfo.objects.get(aadharno=soldProduct.farmerName)
 
@@ -99,7 +103,7 @@ def purchaseCustomerDetail(request):
     updateTrack.save()
     # request paytm to transfer the amount to your account
     param_dict ={
-        'MID': 'zNQCPg84186322693656', #testing
+        'MID': 'zNQCPg84186322693656',
         'ORDER_ID': str(orderObj[0].id),
         'TXN_AMOUNT': str(price),
         'CUST_ID': email,
@@ -163,7 +167,9 @@ def handlerequest(request):
     if varify:
         if response_dict['RESPCODE'] == '01':
             print('order successful')
-            soldProduct = FarmerSellProduct.objects.get(id=request.session['productid'])
+            pro_id = response_dict['ORDERID']
+            soldprdid = orderDetail.objects.get(id=pro_id)
+            soldProduct = FarmerSellProduct.objects.get(id=soldprdid.productid)
             soldProduct.delete()
         else:
             print('order was not successful'+ response_dict['RESPMSG'] )

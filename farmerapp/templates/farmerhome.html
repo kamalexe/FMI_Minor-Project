@@ -38,11 +38,16 @@
                                                             <div class="d-flex flex-row align-items-center my-2">
                                                                 <div class="form-outline flex-fill mb-0">
                                                                     <label>Product Name</label>
-                                                                    <input type="text" class="form-control" required="true" id="productName" name="productName"/>
+                                                                    <input type="text" class="form-control" required="true" id="productName" name="productName" required />
                                                                     <label>Quantity</label>
-                                                                    <input type="number" class="form-control" id="qty" name="qty"/>
+                                                                    <input type="number" class="form-control" id="qty" name="qty" required/>
                                                                     <label>Price</label>
-                                                                    <input type="text" class="form-control" id="price" name="price"/>
+                                                                    <input type="text" class="form-control" id="price" name="price" required/>
+                                                                    <label>Description</label>
+                                                                    <!--minlength="400"-->
+                                                                    <textarea class="form-control"  name="description" id="description" rows="7" required ></textarea>
+                                                                    <label>Image</label>
+                                                                    <input type="file" class="form-control" id="prodImage" accept="image/png, image/gif, image/jpeg" name="prodImage" required/>
                                                                 </div>
                                                             </div>
                                                             <div class="d-flex justify-content-center mx-4 my-2 mb-lg-4">

@@ -12,6 +12,8 @@ class FarmerSellProduct(models.Model):
     productName = models.CharField(max_length=100, default="")
     qty = models.CharField(max_length=100, default="")
     price = models.CharField(max_length=100, default="")
+    description = models.TextField(max_length=100, default="")
+    prodImage = models.ImageField(upload_to='images/')
     likes = models.ManyToManyField(MerchantInfo, related_name='FarmerSellProduct')
 
     def total_likes(self):
