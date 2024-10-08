@@ -7,12 +7,17 @@ from adminapp.models import News
 # Create your views here.
 def index(request):
     ns = News.objects.all()
-    try:
+
+    # Initialize session variables
+    merchantsession = None
+    farmersession = None
+
+    # Check if 'merchant' and 'farmer' keys exist in session
+    if 'merchant' in request.session:
         merchantsession = request.session['merchant']
+    if 'farmer' in request.session:
         farmersession = request.session['farmer']
-    except:
-        farmersession = None
-        merchantsession = None
+
     return render(request, 'index.html', {'ns': ns, 'merchantsession': merchantsession, 'farmersession': farmersession})
 
 

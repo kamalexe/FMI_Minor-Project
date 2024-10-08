@@ -9,15 +9,24 @@ import requests
 
 # Create your views here.
 def farmerhome(request):
+    # Check if the 'farmer' key exists in the session and is not empty
+    farmer_id = request.session.get('farmer')
+    if not farmer_id:
+        return render(request, 'login.html')
+
     try:
-        if request.session['farmer']:
-            farmerName = FarmerInfo.objects.get(userid=request.session['farmer'])
-            ns = "Login Success Full"
-            context = {'ns': ns, 'farmerName': farmerName}
-            return render(request, 'farmerhome.html', context)
+        # Fetch farmer information based on the session's 'farmer' id
+        farmerName = FarmerInfo.objects.get(userid=farmer_id)
+        ns = "Login Successful"
+        context = {'ns': ns, 'farmerName': farmerName}
+        return render(request, 'farmerhome.html', context)
+    except FarmerInfo.DoesNotExist:
+        print("Farmer not found.")
+        return render(request, 'login.html')
     except Exception as e:
-        print(e)
-    return render(request, 'login.html')
+        # Handle any other exceptions and log the error
+        print(f"An error occurred: {e}")
+        return render(request, 'login.html')
 
 
 def uploadProd(request):

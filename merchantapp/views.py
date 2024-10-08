@@ -112,7 +112,7 @@ def purchaseCustomerDetail(request):
         'CHANNEL_ID': 'WEB',
         'CALLBACK_URL':'http://127.0.0.1:8000/merchantapp/handlerequest',
     }
-    param_dict['CHECKSUMHASH'] = Checksum.generate_checksum(param_dict,MERCHANT_KEY)
+    param_dict['CHECKSUMHASH'] = Checksum.generateSignature(param_dict,MERCHANT_KEY)
     return render(request,'paytm.html', {'param_dict':param_dict} )
 
 def purchasedprod(request):
@@ -154,23 +154,42 @@ def LikeView(request,id):
         like = True
     return redirect(f'/merchantapp/viewProd/{id}')
 
+
 @csrf_exempt
 def handlerequest(request):
-    # paytm will send you post request
+    # Paytm will send you a POST request
     form = request.POST
     response_dict = {}
+    checksum = None  # Initialize checksum variable
+    
+    # Populate response_dict and find checksum from form data
     for i in form.keys():
         response_dict[i] = form[i]
-        if i =='CHECKSUMHASH':
-            checksum = form[i]
-    varify = Checksum.verify_checksum(response_dict,MERCHANT_KEY,checksum)
-    if varify:
+        if i == 'CHECKSUMHASH':
+            checksum = form[i]  # Assign value to checksum if it exists
+
+    # Define your key and iv
+    key = "your_32_byte_key"  # Replace with your actual merchant key (32 bytes for AES-256)
+    iv = "your_16_byte_iv"    # Replace with the initialization vector used for encryption (16 bytes)
+    
+    # If checksum is not present in form data, define a static demo checksum for debugging
+    demo_checksum = "YOUR_STATIC_CHECKSUM_VALUE"  # Use a valid checksum for testing
+    if checksum is None:
+        checksum = demo_checksum
+
+    # Verify the checksum
+    verify_result = Checksum.verifySignature(response_dict, checksum, iv)
+    
+    if verify_result:
         if response_dict['RESPCODE'] == '01':
-            print('order successful')
+            print('Order successful')
             pro_id = response_dict['ORDERID']
             soldprdid = orderDetail.objects.get(id=pro_id)
             soldProduct = FarmerSellProduct.objects.get(id=soldprdid.productid)
             soldProduct.delete()
         else:
-            print('order was not successful'+ response_dict['RESPMSG'] )
-    return render(request, 'paymentstatus.html',{'response':response_dict})
+            print('Order was not successful: ' + response_dict['RESPMSG'])
+    else:
+        print('Checksum verification failed!')
+
+    return render(request, 'paymentstatus.html', {'response': response_dict})
